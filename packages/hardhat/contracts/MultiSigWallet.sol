@@ -177,4 +177,8 @@ contract MultiSigWallet {
 			transaction.numConfirmations
 		);
 	}
+
+	function getBalance() external view returns (uint256) {
+		return address(this).balance;
+	}
 }

@@ -25,7 +25,7 @@ contract EtherWallet {
 		return address(this).balance;
 	}
 
-	function setNewOwner(address _newOwner) external OnlyOwner {
+	function setNewOwner(address _newOwner) external {
 		owner = payable(_newOwner);
 	}
 }
