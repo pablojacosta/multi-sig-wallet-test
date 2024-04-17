@@ -10,6 +10,7 @@ contract TokenSwap {
 	IERC20 public token2;
 	address public owner2;
 	uint256 public amount2;
+	string public greeting = "Token Swap!";
 
 	constructor(
 		address _token1,
