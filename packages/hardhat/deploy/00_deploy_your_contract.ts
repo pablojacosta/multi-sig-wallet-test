@@ -84,6 +84,56 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   // Get the deployed contract to interact with it after deploying.
   const sendEther = await hre.ethers.getContract<Contract>("SendEther", deployer);
   console.log("👋 Initial greeting:", await sendEther.greeting());
+
+  // ALICE TOKEN
+
+  await deploy("AliceToken", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [8000],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  // Get the deployed contract to interact with it after deploying.
+  const aliceToken = await hre.ethers.getContract<Contract>("AliceToken", deployer);
+  console.log("👋 Initial greeting:", await aliceToken.greeting());
+  const aliceTokenAddress = await aliceToken.getAddress();
+
+  // BOB TOKEN
+
+  await deploy("BobToken", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [4000],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  // Get the deployed contract to interact with it after deploying.
+  const bobToken = await hre.ethers.getContract<Contract>("BobToken", deployer);
+  console.log("👋 Initial greeting:", await bobToken.greeting());
+  const bobTokenAddress = await bobToken.getAddress();
+
+  // TOKEN SWAP
+
+  await deploy("TokenSwap", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [aliceTokenAddress, deployer, 200, bobTokenAddress, deployer, 500],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  // Get the deployed contract to interact with it after deploying.
+  const tokenSwap = await hre.ethers.getContract<Contract>("TokenSwap", deployer);
+  console.log("👋 Initial greeting:", await tokenSwap.greeting());
 };
 
 export default deployYourContract;
