@@ -2,6 +2,9 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { Contract } from "ethers";
 
+const CONNECTED_ADDRESS = process.env.CONNECTED_ADDRESS as string;
+const MY_WALLET = process.env.MY_WALLET as string;
+
 /**
  * Deploys a contract named "YourContract" using the deployer account and
  * constructor arguments set to the deployer address
@@ -42,7 +45,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   await deploy("MultiSigWallet", {
     from: deployer,
     // Contract constructor arguments
-    args: [["0xBfb8851CcADB41777C1854Ca399312C0ddEf296D"], 1],
+    args: [[CONNECTED_ADDRESS, MY_WALLET], 1],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -90,7 +93,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   await deploy("AliceToken", {
     from: deployer,
     // Contract constructor arguments
-    args: [8000],
+    args: [10000],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -107,7 +110,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   await deploy("BobToken", {
     from: deployer,
     // Contract constructor arguments
-    args: [4000],
+    args: [10000],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -124,7 +127,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   await deploy("TokenSwap", {
     from: deployer,
     // Contract constructor arguments
-    args: [aliceTokenAddress, deployer, 200, bobTokenAddress, deployer, 500],
+    args: [aliceTokenAddress, CONNECTED_ADDRESS, 1, bobTokenAddress, MY_WALLET, 1],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
